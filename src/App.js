@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { connect } from "react-redux";
+import ShowNote from "./components/ShowNote";
+import AddNote from "./components/AddNote";
 
-function App() {
+function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="row" style={{ marginTop: "3%" }}>
+      <AddNote />
+      {props.note.map((note, index) => {
+        return <ShowNote noteData={note} key={note.id} />;
+      })}
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    note: state.note,
+  };
+};
+
+export default connect(mapStateToProps, null)(App);
